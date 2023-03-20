@@ -23,5 +23,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.22515, 1.5, -4.25388)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.36805, 1.5, -4.45931)
 
 [node name="Spawner" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 6)
 script = ExtResource("3_58l8c")
+
+[node name="Label" type="Label3D" parent="Spawner"]
+text = "ASD"
