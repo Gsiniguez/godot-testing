@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://2tfysbuus25u"]
+
+[ext_resource type="Script" path="res://network/network.gd" id="1_2a77x"]
+[ext_resource type="PackedScene" uid="uid://hgisrtsyx2j8" path="res://network/ui/network_ui.tscn" id="2_qrhlr"]
+
+[node name="Network" type="Node"]
+script = ExtResource("1_2a77x")
+
+[node name="NetworkUI" parent="." instance=ExtResource("2_qrhlr")]
+
+[node name="Players" type="VBoxContainer" parent="NetworkUI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="NetworkUI/Players"]
+layout_mode = 2
+text = "Players:"
+
+[connection signal="pressed" from="NetworkUI/HBoxContainer/VBoxContainer/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="NetworkUI/HBoxContainer/VBoxContainer/Join" to="." method="_on_join_pressed"]
+
+[editable path="NetworkUI"]
