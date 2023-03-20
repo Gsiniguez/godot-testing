@@ -1,12 +1,14 @@
 extends Node3D
 
-var local_player_character
+var Player = preload("res://player/player.tscn")
+@onready var players = $"../PanelContainer/MarginContainer/Players"
 
 func _on_network_player_spawned(peer_id):
-	print(multiplayer.get_unique_id()," _on_network_player_spawned ",peer_id )
-	var player_character = preload("res://player/player.tscn").instantiate()
-	player_character.set_multiplayer_authority(peer_id)
-	$Label.add_child(player_character)
-	$Label.text = str(get_multiplayer_authority())
-	if peer_id == multiplayer.get_unique_id():
-		local_player_character = player_character
+	var player = Player.instantiate()
+	player.set_multiplayer_authority(peer_id)
+	player.name = str(peer_id)
+	add_child(player)
+	var lab = Label.new()
+	lab.text = str(peer_id)
+	lab.name = str(peer_id)
+	players.add_child(lab)

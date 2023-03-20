@@ -26,5 +26,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.36805, 1.5, -4.45931)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 6)
 script = ExtResource("3_58l8c")
 
-[node name="Label" type="Label3D" parent="Spawner"]
-text = "ASD"
+[node name="PanelContainer" type="PanelContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Players" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/Players"]
+layout_mode = 2
+text = "Players:"
