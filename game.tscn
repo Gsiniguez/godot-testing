@@ -1,17 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8mp3ehdbcywk"]
+[gd_scene load_steps=3 format=3 uid="uid://c8mp3ehdbcywk"]
 
 [ext_resource type="PackedScene" uid="uid://2tfysbuus25u" path="res://network/network.tscn" id="1_1mya3"]
 [ext_resource type="PackedScene" uid="uid://phjn4phsc3m2" path="res://maps/mapa_1.tscn" id="1_wodls"]
-[ext_resource type="PackedScene" uid="uid://dnw5dc1n6gn58" path="res://objects/camera/camera.tscn" id="3_8fxl2"]
 
 [node name="Game" type="Node"]
 
 [node name="Network" parent="." instance=ExtResource("1_1mya3")]
 
 [node name="Mapa1" parent="." instance=ExtResource("1_wodls")]
-
-[node name="Camera" parent="." instance=ExtResource("3_8fxl2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 16)
 
 [connection signal="player_spawned" from="Network" to="Mapa1/Spawner" method="_on_network_player_spawned"]
 

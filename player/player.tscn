@@ -12,19 +12,30 @@ albedo_color = Color(0.313726, 0.380392, 0.490196, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_ytdej"]
 material = SubResource("StandardMaterial3D_0ivgi")
 
-[node name="Player" type="Node3D"]
+[node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_xggjp")
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_sko1j")
 
-[node name="Body" type="MeshInstance3D" parent="CharacterBody3D/CollisionShape3D"]
-mesh = SubResource("CapsuleMesh_fto3i")
-skeleton = NodePath("../..")
+[node name="Mark" type="Label3D" parent="CollisionShape3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35398, 0)
+pixel_size = 0.015
+text = "X"
 
-[node name="Visor" type="MeshInstance3D" parent="CharacterBody3D/CollisionShape3D"]
-transform = Transform3D(0.475553, 0, 0, 0, 0.284918, 0, 0, 0, 0.304469, 0, 0.36839, 0.439952)
+[node name="Pivot" type="Node3D" parent="CollisionShape3D"]
+
+[node name="Body" type="MeshInstance3D" parent="CollisionShape3D/Pivot"]
+mesh = SubResource("CapsuleMesh_fto3i")
+skeleton = NodePath("../../..")
+
+[node name="Visor" type="MeshInstance3D" parent="CollisionShape3D/Pivot"]
+transform = Transform3D(0.475553, 0, 0, 0, 0.284918, 0, 0, 0, 0.304469, 0, 0.36839, -0.448158)
 mesh = SubResource("BoxMesh_ytdej")
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 5)
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
