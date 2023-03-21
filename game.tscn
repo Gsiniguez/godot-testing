@@ -9,6 +9,4 @@
 
 [node name="Mapa1" parent="." instance=ExtResource("1_wodls")]
 
-[connection signal="player_spawned" from="Network" to="Mapa1/Spawner" method="_on_network_player_spawned"]
-
 [editable path="Mapa1"]

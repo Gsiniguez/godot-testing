@@ -1,12 +1,43 @@
-[gd_scene load_steps=3 format=3 uid="uid://2tfysbuus25u"]
+[gd_scene load_steps=4 format=3 uid="uid://2tfysbuus25u"]
 
 [ext_resource type="Script" path="res://network/network.gd" id="1_2a77x"]
 [ext_resource type="PackedScene" uid="uid://hgisrtsyx2j8" path="res://network/ui/network_ui.tscn" id="2_qrhlr"]
+[ext_resource type="Script" path="res://network/ui/TabMenu.gd" id="2_yhoev"]
 
 [node name="Network" type="Node"]
 script = ExtResource("1_2a77x")
 
+[node name="TabMenu" type="PanelContainer" parent="."]
+visible = false
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 288.0
+grow_vertical = 2
+script = ExtResource("2_yhoev")
+
+[node name="TabMenu_MarginContainer" type="MarginContainer" parent="TabMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 9
+theme_override_constants/margin_top = 9
+theme_override_constants/margin_right = 9
+theme_override_constants/margin_bottom = 9
+
+[node name="TabMenu_Players" type="VBoxContainer" parent="TabMenu/TabMenu_MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="MenuTitle" type="Label" parent="TabMenu/TabMenu_MarginContainer/TabMenu_Players"]
+layout_mode = 2
+text = "Jugadores:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="NetworkUI" parent="." instance=ExtResource("2_qrhlr")]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player/player.tscn")
+spawn_path = NodePath("..")
 
 [connection signal="pressed" from="NetworkUI/HBoxContainer/VBoxContainer/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="NetworkUI/HBoxContainer/VBoxContainer/Join" to="." method="_on_join_pressed"]

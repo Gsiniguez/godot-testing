@@ -1,11 +1,13 @@
 extends Node
 
-signal player_spawned
+var Player = preload("res://player/player.tscn")
 
 const PORT = 3005
 
 var peer = ENetMultiplayerPeer.new()
-var connected_peer_ids = []
+
+var players = {}
+@onready var tab_menu_players = $TabMenu/TabMenu_MarginContainer/TabMenu_Players
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -26,8 +28,7 @@ func _on_host_pressed():
 	peer.peer_connected.connect(_on_peer_connected)
 	peer.peer_disconnected.connect(_on_peer_disconnected)
 	
-	emit_signal("player_spawned", multiplayer.get_unique_id())
-	connected_peer_ids.append(multiplayer.get_unique_id())
+	instantiate_player()
 	$NetworkUI.hide()
 
 func _on_join_pressed():
@@ -41,25 +42,43 @@ func _on_join_pressed():
 	$NetworkUI.hide()
 
 
-func _on_peer_connected(new_peer_id):
-	print("New Connection: ", new_peer_id)
-	await get_tree().create_timer(1).timeout
-	rpc("add_player", new_peer_id)
-	rpc_id(new_peer_id, "add_others_players", connected_peer_ids)
-	#SERVER
-	emit_signal("player_spawned", new_peer_id)
+func _on_peer_connected(id):
+	print("New Connection: ", id)
+	await get_tree().create_timer(2).timeout
+	instantiate_player(id)
 	
-@rpc
-func add_player(new_peer_id):
-	connected_peer_ids.append(new_peer_id)	
-	emit_signal("player_spawned", new_peer_id)
+	#await get_tree().create_timer(1).timeout
+	#CALL A TODOS LOS PEER
+	#rpc("setNewPLayer", id)
+	#CALL A UN PEER
+	#rpc_id(id, "setNewPLayers", players)
+	
+	var nameLabel = Label.new()
+	nameLabel.name = str(id)
+	nameLabel.text = str(id)
+	tab_menu_players.add_child(nameLabel)
 
 
 @rpc
-func add_others_players(peer_ids):
-	for peer_id in peer_ids:
-		emit_signal("player_spawned", peer_id)
-
-func _on_peer_disconnected(new_peer_id):
-	print("Lost Connection: ", new_peer_id)
+func setNewPLayer(id):
 	pass
+
+@rpc
+func setNewPLayers(player_list):
+	for id in player_list:
+		var nameLabel = Label.new()
+		nameLabel.name = str(id)
+		nameLabel.text = str(id)
+		tab_menu_players.add_child(nameLabel)
+
+func _on_peer_disconnected(id):
+	print("Lost Connection: ", id)
+	remove_child(players[id])
+	tab_menu_players.remove_child(players[id])
+
+
+func instantiate_player(id = 1):
+	var player = Player.instantiate()
+	player.name = str(id)
+	players[id] = player
+	add_child(player)

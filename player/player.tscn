@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://baaypeepuijqq"]
+[gd_scene load_steps=7 format=3 uid="uid://baaypeepuijqq"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_xggjp"]
 
@@ -12,16 +12,19 @@ albedo_color = Color(0.313726, 0.380392, 0.490196, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_ytdej"]
 material = SubResource("StandardMaterial3D_0ivgi")
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_bl0p8"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/sync = true
+properties/1/path = NodePath("CollisionShape3D/Pivot:rotation")
+properties/1/spawn = true
+properties/1/sync = true
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_xggjp")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_sko1j")
-
-[node name="Mark" type="Label3D" parent="CollisionShape3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.35398, 0)
-pixel_size = 0.015
-text = "X"
 
 [node name="Pivot" type="Node3D" parent="CollisionShape3D"]
 
@@ -34,8 +37,12 @@ transform = Transform3D(0.475553, 0, 0, 0, 0.284918, 0, 0, 0, 0.304469, 0, 0.368
 mesh = SubResource("BoxMesh_ytdej")
 skeleton = NodePath("../../..")
 
-[node name="SpringArm3D" type="SpringArm3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 5)
+[node name="SpringArm" type="SpringArm3D" parent="."]
+transform = Transform3D(0.707107, 0.664463, -0.241845, 0, 0.34202, 0.939693, 0.707107, -0.664463, 0.241845, 0, 0, 0)
+spring_length = 8.0
 
-[node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0)
+[node name="Camera" type="Camera3D" parent="SpringArm"]
+current = true
+
+[node name="Sync" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_bl0p8")
