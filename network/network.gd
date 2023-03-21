@@ -1,7 +1,7 @@
 extends Node
 
 var Player = preload("res://player/player.tscn")
-
+var Character = preload("res://player/character.tscn")
 const PORT = 3005
 
 var peer = ENetMultiplayerPeer.new()
@@ -78,7 +78,7 @@ func _on_peer_disconnected(id):
 
 
 func instantiate_player(id = 1):
-	var player = Player.instantiate()
+	var player = Character.instantiate()
 	player.name = str(id)
 	players[id] = player
 	add_child(player)

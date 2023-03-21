@@ -36,7 +36,7 @@ vertical_alignment = 1
 [node name="NetworkUI" parent="." instance=ExtResource("2_qrhlr")]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://player/player.tscn")
+_spawnable_scenes = PackedStringArray("res://player/character.tscn")
 spawn_path = NodePath("..")
 
 [connection signal="pressed" from="NetworkUI/HBoxContainer/VBoxContainer/Host" to="." method="_on_host_pressed"]
